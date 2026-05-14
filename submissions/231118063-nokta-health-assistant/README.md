@@ -1,3 +1,5 @@
+Track: A
+
 ## Proje Özeti: Nokta - Yapay Zeka Tabanlı Sağlık ve Psikoloji Asistanı
 
 Bu proje, kullanıcıları dinleyen, anlayan ve gerektiğinde stres durumlarına göre doğrudan bir "Uzman Desteği"ne yönlendirerek yapay zeka ile insan etkileşimini birleştiren interaktif bir mobil sağlık asistanıdır.

@@ -9,9 +9,9 @@ interface NoktaAvatarProps {
 export default function NoktaAvatar({ isSpeaking, voiceLevel = 0 }: NoktaAvatarProps) {
   const [reaction, setReaction] = useState<'idle' | 'sleep' | 'tickle' | 'angry' | 'love'>('idle');
   
-  const idleTimer = useRef<NodeJS.Timeout | null>(null);
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const clickCount = useRef(0);
-  const clickTimer = useRef<NodeJS.Timeout | null>(null);
+  const clickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Animations
   const floatAnim = useRef(new Animated.Value(0)).current;
