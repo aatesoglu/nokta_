@@ -32,3 +32,10 @@ Projenin Android için derlenmiş çalışabilir APK dosyasına aşağıdaki ba�
 2. **Yapay Zeka:** Hız ve kalite dengesi için Groq API (Llama 3.3) tercih edildi.
 3. **Güvenlik:** Rol dışına çıkılmasını engellemek için LLM Test Harness geliştirildi.
 
+### 📊 Audit-Forge Metrics
+- **Human Touch Points:** 0 (Geliştirme ve hata giderme süreçleri tamamen otonom olarak Antigravity Agent tarafından yürütüldü).
+- **Forge Cycles:** 3 Başarılı, 1 Geri Çekilen (Rollback)
+- **Toplam Ağırlık (kg):** 34 kg
+- **Kullanılan AI Araçları:** Google Gemini (Antigravity AI Agent)
+
+
