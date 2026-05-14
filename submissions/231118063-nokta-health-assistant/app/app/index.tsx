@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition';
@@ -8,6 +8,7 @@ import Brain from '../src/Brain';
 
 export default function App() {
   const router = useRouter();
+  const scrollViewRef = useRef<ScrollView>(null);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -43,6 +44,13 @@ export default function App() {
       handleSend(transcript);
     }
   }, [isListening]);
+
+  // Auto scroll to bottom on new chat messages
+  useEffect(() => {
+    setTimeout(() => {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, 150);
+  }, [chat]);
 
   const handleSend = async (text: string) => {
     if (!text.trim()) return;
@@ -80,7 +88,7 @@ export default function App() {
         <NoktaAvatar isSpeaking={isSpeaking} />
       </View>
 
-      <ScrollView style={styles.chatContainer} contentContainerStyle={{ padding: 20, paddingBottom: 110 }}>
+      <ScrollView ref={scrollViewRef} style={styles.chatContainer} contentContainerStyle={{ padding: 20, paddingBottom: 110 }}>
         {chat.map((msg, idx) => (
           <View key={idx} style={[styles.messageBubble, msg.role === 'user' ? styles.messageUser : styles.messageNokta]}>
             <Text style={[styles.messageText, msg.role === 'user' ? styles.messageTextUser : styles.messageTextNokta]}>
