@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, ScrollView, Modal } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ExpertScreen() {
   const router = useRouter();
+  const scrollViewRef = useRef<ScrollView>(null);
   const [messages, setMessages] = useState([
     { role: 'expert', text: 'Merhaba, ben Klinik Psikolog Ayşe Yılmaz. Size nasıl yardımcı olabilirim? Kendinizi nasıl hissediyorsunuz?' }
   ]);
   const [inputText, setInputText] = useState('');
   const [isVideoCallActive, setIsVideoCallActive] = useState(false);
+
+  // Auto scroll to bottom on new messages
+  useEffect(() => {
+    setTimeout(() => {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, 150);
+  }, [messages]);
 
   const handleSend = async () => {
     if (!inputText.trim()) return;
@@ -71,7 +79,7 @@ export default function ExpertScreen() {
       </View>
 
       {/* Chat Area */}
-      <ScrollView style={styles.chatArea} contentContainerStyle={{ padding: 20 }}>
+      <ScrollView ref={scrollViewRef} style={styles.chatArea} contentContainerStyle={{ padding: 20 }}>
         {messages.map((msg, idx) => (
           <View key={idx} style={[styles.messageBubble, msg.role === 'user' ? styles.userBubble : styles.expertBubble]}>
             <Text style={[styles.messageText, msg.role === 'user' ? styles.userText : styles.expertText]}>
