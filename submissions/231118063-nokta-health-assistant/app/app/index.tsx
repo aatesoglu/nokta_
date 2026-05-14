@@ -80,7 +80,7 @@ export default function App() {
         <NoktaAvatar isSpeaking={isSpeaking} />
       </View>
 
-      <ScrollView style={styles.chatContainer} contentContainerStyle={{ padding: 20 }}>
+      <ScrollView style={styles.chatContainer} contentContainerStyle={{ padding: 20, paddingBottom: 110 }}>
         {chat.map((msg, idx) => (
           <View key={idx} style={[styles.messageBubble, msg.role === 'user' ? styles.messageUser : styles.messageNokta]}>
             <Text style={[styles.messageText, msg.role === 'user' ? styles.messageTextUser : styles.messageTextNokta]}>
