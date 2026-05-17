@@ -12,6 +12,8 @@ import React from 'react';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
+import { Alert } from 'react-native';
+
 // Bridge implementation for AuditWidget dependencies
 const auditStorage = {
   async loadNotes() {
@@ -45,10 +47,32 @@ const writeFileBinary = async (filename: string, base64: string) => {
 };
 
 const shareFile = async (uri: string) => {
-  if (await Sharing.isAvailableAsync()) {
-    await Sharing.shareAsync(uri);
-  } else {
-    console.warn('Sharing is not available on this device');
+  try {
+    console.log('\n==================================================');
+    console.log('🚀 [Nokta Audit Widget] PAYLAŞIM TETİKLENDİ!');
+    console.log('URI:', uri);
+    
+    try {
+      const reportContent = await FileSystem.readAsStringAsync(uri);
+      console.log('--- DOSYA İÇERİĞİ ---');
+      console.log(reportContent);
+    } catch (e) {
+      console.log('Dosya metin formatında değil (muhtemelen ekran görüntüsü).');
+    }
+    console.log('==================================================\n');
+
+    Alert.alert('Sistem Yanıtı', 'Dosya paylaşım adımı tetiklendi. Lütfen terminali kontrol edin.');
+
+    if (await Sharing.isAvailableAsync()) {
+      await Sharing.shareAsync(uri, {
+        dialogTitle: 'Audit Raporunu Paylaş',
+        mimeType: uri.endsWith('.md') ? 'text/markdown' : 'image/jpeg',
+      });
+    } else {
+      console.warn('Sharing is not available on this device');
+    }
+  } catch (error) {
+    console.error('Sharing failed:', error);
   }
 };
 
