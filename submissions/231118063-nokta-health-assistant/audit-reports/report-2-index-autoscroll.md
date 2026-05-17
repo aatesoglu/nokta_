@@ -8,26 +8,27 @@
 ---
 
 ### 🔍 Hata Tanımı
-Mascot (Nokta) sesli asistanı konuştuktan sonra ekrana yazılı bir yanıt bastığında, `ScrollView` otomatik olarak aşağı kaymıyor. Kullanıcı ekrandaki yeni cevabı görmek için her seferinde manuel olarak sayfayı aşağıya kaydırmak zorunda kalıyor. Bu durum akıcı UX deneyimini olumsuz etkiliyor.
+Asistan (Nokta) uzun süre işlem yapılmadığında uyku moduna ("Zzz" durumu) geçiyor. Ancak kullanıcı ekrana dokunduğunda veya yeni bir komut verdiğinde, uyku ikonu ve kapalı göz animasyonu ekranda asılı (donuk) kalıyor. Asistan uyanma (idle/active) durumuna geçiş yapamıyor.
 
 ### 🛠 Önerilen Çözüm
-Sohbet dizisi her güncellendiğinde `useEffect` kancası içinde referans verilen ScrollView bileşenine `scrollToEnd({ animated: true })` fonksiyonu çağrısı eklenmeli.
+Uyku durumunu yöneten `sleepState` veya `isSleeping` değişkenine bağımlı (dependent) olan animasyon bileşenlerindeki durum yönetimi (state management) kontrol edilmeli. `useEffect` tetikleyicilerinde state güncellendiğinde animasyonun zorla (force) yeniden render edilmesi veya uyanma animasyonunun tetiklenmesi sağlanmalı.
 
 ### 📸 Görsel İnceleme
-*(Kullanıcı tarafından işaretlenen otomatik kaydırma beklenen alan)*
+*(Kullanıcı tarafından işaretlenen takılı kalan animasyon alanı aşağıda belirtilmiştir)*
 
 ```
 +-------------------------------+
-|  Nokta - Sağlık Asistanın      |
+|  Nokta - Sağlık Asistanın     |
+|                               |
+|                               |
+|  +-[ SARILI KUTU ALANI ]---+  |
+|  |           Zzz           |  |
+|  |          -   -          |  |
+|  |            _            |  |
+|  +-------------------------+  |
 |                               |
 |  +-------------------------+  |
-|  | Merhaba!                |  |
-|  +-------------------------+  |
-|  | [  Eski Mesajlar...  ]  |  |
-|  |                         |  |
-|  |                         |  |
-|  +-[ SARILI KUTU ALANI ]---+  |
-|  | [Buraya kayması lazım]  |  |
+|  | Merhaba, uyandın mı?    |  |
 |  +-------------------------+  |
 +-------------------------------+
 ```

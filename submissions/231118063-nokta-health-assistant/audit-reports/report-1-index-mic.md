@@ -8,27 +8,27 @@
 ---
 
 ### 🔍 Hata Tanımı
-Sohbet ekranında mesajlar çoğaldığında, en alttaki mesajlar yüzen mikrofon butonunun arkasında kalıyor. Kullanıcılar son gelen mesajı okuyabilmek için fazladan kaydırma yapmak istese de alt boşluk (padding) yetersiz olduğu için mesaj butonu kapatıyor.
+Sohbet ekranının alt kısmındaki metin giriş kutusu (TextInput) ve mavi gönder butonu, sanal klavye açıldığında yukarı doğru kaymıyor ve klavyenin altında kalarak görünmez oluyor. Kullanıcı ne yazdığını veya gönder butonunu göremiyor.
 
 ### 🛠 Önerilen Çözüm
-`ScrollView` bileşeninin `contentContainerStyle` altındaki `paddingBottom` değeri 110px değerine yükseltilerek butonun arkasında kalan alan görünür hale getirilmeli.
+Ekranın ana bileşeni bir `KeyboardAvoidingView` içerisine alınmalı ve iOS/Android platform farklılıkları gözetilerek `behavior="padding"` (veya `height`) özelliği eklenerek giriş alanının klavye üzerinde kalması sağlanmalı.
 
 ### 📸 Görsel İnceleme
-*(Kullanıcı tarafından arayüzde işaretlenen alan aşağıda belirtilmiştir)*
+*(Kullanıcı tarafından arayüzde işaretlenen giriş alanı aşağıda belirtilmiştir)*
 
 ```
 +-------------------------------+
-|  Nokta - Sağlık Asistanın      |
+|  Nokta - Sağlık Asistanın     |
 |                               |
 |       [ NOKTA AVATAR ]        |
 |                               |
-|  +-------------------------+  |
-|  | Merhaba, bugün nasılsın? |  |
-|  +-------------------------+  |
-|  | İyiyim, teşekkürler.     |  |
+|                               |
 |  +-[ SARILI KUTU ALANI ]---+  |
-|  | [  🛑 MİKROFON BUTONU ] |  |
+|  | [Mesaj yazın...]  [ 🚀 ] |  |
 |  +-------------------------+  |
++-------------------------------+
+| [ Q W E R T Y U I O P Ğ Ü ]   |
+|  [ A S D F G H J K L Ş İ ]    |
 +-------------------------------+
 ```
 
